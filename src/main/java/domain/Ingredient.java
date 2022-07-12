@@ -1,25 +1,29 @@
-package guru.springframework.domain;
-
-import java.math.BigDecimal;
+package domain;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-/**
- * Created by jt on 6/13/17.
- */
+import guru.springframework.domain.Recipe;
+import guru.springframework.domain.UnitOfMeasure;
+
 @Entity
-public class UnitOfMeasure {
-
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private BigDecimal amount;
+    private String amount;
 
-    
+    @OneToOne(fetch = FetchType.EAGER)
+    private UnitOfMeasure uom;
+
+    @ManyToOne
+    private Recipe recipe;
 
     public Long getId() {
         return id;
@@ -37,11 +41,19 @@ public class UnitOfMeasure {
         this.description = description;
     }
 
-    public BigDecimal getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 }
